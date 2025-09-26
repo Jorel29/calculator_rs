@@ -1,5 +1,8 @@
 use std::{env, process};
 
+// Current To Do: 
+// - Evaluate proper operator function
+// - Execute operation
 
 fn main() {
     let args:Vec<String> = env::args().collect();
@@ -8,6 +11,7 @@ fn main() {
         eprintln!("Error parsing arguements {err}");
         process::exit(1);
     });
+
 }
 
 struct Command {
