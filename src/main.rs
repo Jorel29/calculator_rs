@@ -2,7 +2,7 @@ use std::{env, process};
 
 // Current To Do: 
 // - Evaluate proper operator function
-// - Execute operation
+// - Add, Sub, Div, Mul
 
 fn main() {
     let args:Vec<String> = env::args().collect();
@@ -35,4 +35,23 @@ impl Command {
         
         Ok(Command {a:a.unwrap(), b:b.unwrap(), op})
    }
+}
+
+fn eval_op(cmd: Command)-> Result<f32, &'static str> {
+    
+    let mut answer: f32;
+    if cmd.op == "+"{
+        
+    }else if cmd.op == "-" {
+        
+    }else if cmd.op == "/" {
+        
+    }else if cmd.op == "*" || cmd.op == "x" {
+        
+    }else{
+        return Err("Error finding operator");
+    }
+
+
+    Ok(32.0)
 }
