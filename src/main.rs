@@ -35,3 +35,4 @@ impl Command {
         
         Ok(Command {a:a.unwrap(), b:b.unwrap(), op})
    }
+}
