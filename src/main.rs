@@ -1,4 +1,4 @@
-use std::{env, f32::consts::E, process};
+use std::{env, process};
 
 // Current To Do: 
 // - Evaluate proper operator function
@@ -41,21 +41,43 @@ impl Command {
    }
 }
 
+fn mult(cmd: &Command) -> f32 {
+    cmd.a * cmd.b
+}
+
+fn div(cmd: &Command) -> Result<f32, &'static str>{
+    if cmd.b < 0.0 {
+        return Err("Divide by zero");
+    }else {
+        Ok(cmd.a/cmd.b)
+    }
+}
+
+fn subtract(cmd: &Command) -> f32 {
+    cmd.a - cmd.b
+}
+
 fn add(cmd: &Command) -> f32 {
     cmd.a + cmd.b   
 }
 
 fn eval_op(cmd: &Command)-> Result<f32, &'static str> {
     
-    let mut answer: f32 = 0.0;
+    let answer: f32;
     if cmd.op == "+"{
         answer = add(cmd); 
     }else if cmd.op == "-" {
-        answer
+        answer = subtract(cmd);
     }else if cmd.op == "/" {
-        
+        let temp:Result<f32, &'static str>= div(cmd);
+        if temp.is_err(){
+            return temp;
+        }else{
+            answer = temp.unwrap();
+        }
+            
     }else if cmd.op == "*" || cmd.op == "x" {
-        
+        answer = mult(cmd); 
     }else{
         return Err("Error finding operator");
     }
