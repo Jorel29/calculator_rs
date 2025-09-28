@@ -1,4 +1,4 @@
-use std::{env, process};
+use std::{env, f32::consts::E, process};
 
 // Current To Do: 
 // - Evaluate proper operator function
@@ -12,6 +12,10 @@ fn main() {
         process::exit(1);
     });
 
+    if let Err(e) = eval_op(&command)  {
+        eprintln!("Calculator error: {e}");
+        process::exit(1);
+    }
 }
 
 struct Command {
@@ -35,4 +39,27 @@ impl Command {
         
         Ok(Command {a:a.unwrap(), b:b.unwrap(), op})
    }
+}
+
+fn add(cmd: &Command) -> f32 {
+    cmd.a + cmd.b   
+}
+
+fn eval_op(cmd: &Command)-> Result<f32, &'static str> {
+    
+    let mut answer: f32 = 0.0;
+    if cmd.op == "+"{
+        answer = add(cmd); 
+    }else if cmd.op == "-" {
+        answer
+    }else if cmd.op == "/" {
+        
+    }else if cmd.op == "*" || cmd.op == "x" {
+        
+    }else{
+        return Err("Error finding operator");
+    }
+
+
+    Ok(answer)
 }
