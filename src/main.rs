@@ -1,14 +1,42 @@
-use std::{env, process};
+use std::{ io, process};
 
 // Current To Do: 
-// - Evaluate proper operator function
-// - Add, Sub, Div, Mul
+// - make some integration tests
 
 fn main() {
-    let args:Vec<String> = env::args().collect();
     
+
+    println!("Please input your first number");
+    let mut a = String::new();
+
+    io::stdin().read_line(&mut a).unwrap_or_else(|e|{
+        eprintln!("Error: {e}, invalid input");
+        process::exit(1);
+    });
+
+    println!("Please input your second number");
+    let mut b = String::new();
+    io::stdin().read_line(&mut b).unwrap_or_else(|e|{
+        eprintln!("Error: {e} invalid input");
+        process::exit(1);
+    });
+
+    println!("Please input a math operation");    
+    let mut op = String::new();
+    
+    io::stdin().read_line(&mut op).unwrap_or_else(|e|{
+        eprintln!("Error: {e} invalid input");
+        process::exit(1);
+    });
+
+    let args:Vec<String> = vec![a, b, op];
+
+    if args.len() < 3 {
+        eprintln!("Error, too few arguements");
+        process::exit(1);
+    } 
     let command = Command::new(&args).unwrap_or_else(|err|{
-        eprintln!("Error parsing arguements {err}");
+        eprintln!("Error parsing arguements: {err}");
         process::exit(1);
     });
 
@@ -27,15 +55,19 @@ struct Command {
 impl Command {
     fn new(args: &[String]) -> Result<Command, &'static str>{
         
-        let a:Result<f32, std::num::ParseFloatError> = args[1].parse::<f32>();
+        println!("args: a{}a", args[0].trim());
+        let a = args[0].trim().parse::<f32>();
 
-        let b:Result<f32, std::num::ParseFloatError> = args[2].parse::<f32>();
+        let b = args[1].trim().parse::<f32>();
         
-        if b.is_err() || a.is_err(){
-            return Err("Cannot parse for number arguement");
+        if a.is_err(){
+            return Err("Cannot parse for number a arguement");
         }
 
-        let op: String = args[3].clone();
+        if b.is_err(){
+            return Err("Cannot parse for number b arguement");
+        }
+        let op = args[2].trim().to_string().clone();
         
         Ok(Command {a:a.unwrap(), b:b.unwrap(), op})
    }
